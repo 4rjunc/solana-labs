@@ -1,0 +1,16 @@
+{
+  "name": "lab2",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@bonfida/spl-name-service": "^3.0.1",
+    "@solana/web3.js": "^1.95.2",
+    "esrun": "^3.2.26"
+  }
+}
