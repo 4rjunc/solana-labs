@@ -1,16 +1,36 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { IntroToAnchorDevelopment } from "../target/types/intro_to_anchor_development";
+import { expect } from "chai";
+import { AnchorCounter } from "../target/types/anchor_counter";
 
-describe("intro-to-anchor-development", () => {
+describe("anchor-counter", () => {
   // Configure the client to use the local cluster.
-  anchor.setProvider(anchor.AnchorProvider.env());
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
 
-  const program = anchor.workspace.IntroToAnchorDevelopment as Program<IntroToAnchorDevelopment>;
+  const program = anchor.workspace.AnchorCounter as Program<AnchorCounter>;
+
+  const counter = anchor.web3.Keypair.generate();
+  console.log(`counter: ${counter}`);
 
   it("Is initialized!", async () => {
-    // Add your test here.
-    const tx = await program.methods.initialize().rpc();
-    console.log("Your transaction signature", tx);
+    const tx = await program.methods
+      .initialize()
+      .accounts({ counter: counter.publicKey })
+      .signers([counter])
+      .rpc();
+
+    const account = await program.account.counter.fetch(counter.publicKey);
+    expect(account.count.toNumber()).to.equal(0);
+  });
+
+  it("Increment the count", async () => {
+    const tx = await program.methods
+      .increament()
+      .accounts({ counter: counter.publicKey, user: provider.wallet.publicKey })
+      .rpc();
+
+    const account = await program.account.counter.fetch(counter.publicKey);
+    expect(account.count.toNumber()).to.equal(1);
   });
 });

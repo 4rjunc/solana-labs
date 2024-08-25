@@ -5,13 +5,13 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-intro_to_anchor_development = "LN6QNbzSeFWg4ggXDBpvwJBSCTaF5uphcFB7Axh3KrT"
+intro_to_anchor_development = "ETfwDHLF5pMbPZyZKfxui1LBjiTRXztYGzTf6XEwqZa"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
